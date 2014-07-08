@@ -5,7 +5,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     # Examples:
-    # url(r'^$', 'imagr_site.views.home', name='home'),
+    url(r'^imagr_images/', include('imagr_images.urls', namespace='imagr_images')),
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
