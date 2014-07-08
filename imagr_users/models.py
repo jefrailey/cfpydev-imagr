@@ -110,15 +110,17 @@ class ImagrUser(AbstractUser):
         if other not in self.friends():
             rel = self._relationship_with(other)
             if rel is not None:
-                rel.friendship = True
+                rel.friendship = 3
             else:
-                rel = Relationship(left=self, right=other, follower_status=0, friendship=True)
+                rel = Relationship(left=self, right=other, follower_status=0, friendship=3)
         raise NotImplementedError
 
     def end_friendship(self, other):
         """Self terminates friendship with other
         """
-        raise NotImplementedError
+        if other not in self.friends():
+            rel = self._relationship_with(other)
+            rel.friendship = 0
 
     def friends(self):
         """Return queryset of self's friends"""
