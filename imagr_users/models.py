@@ -124,9 +124,9 @@ class ImagrUser(AbstractUser):
         """Return queryset of self's friends"""
         friends = ImagrUser.objects.filter(
             (Q(relationships_from__right=self) &
-             Q(relationships_from__friendship__exact=True)) |
+             Q(relationships_from__friendship__exact=3)) |
             (Q(relationships_to__left=self) &
-             Q(relationships_to__friendship__exact=True))
+             Q(relationships_to__friendship__exact=3))
         )
         return friends
 
@@ -189,7 +189,7 @@ class Relationship(models.Model):
         unique_together = ('left', 'right')
 
     def __unicode__(self):
-        symbol = FOLLOWER_SYMBOLS.get(self.follower_status, ' - ')
+        symbol = RELATIONSHIP_SYMBOLS.get(self.follower_status, ' - ')
         representation = u'{} {} {}'.format(
             unicode(self.left), symbol, unicode(self.right))
         if self.friendship:
