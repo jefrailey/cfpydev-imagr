@@ -71,7 +71,7 @@ class ImagrUser(AbstractUser):
                         break
             else:
                 rel = Relationship(
-                    left=self, right=other, follower_status=1
+                    left=self, right=other, follower_status=1, friendship=0
                 )
             rel.full_clean()
             rel.save()
@@ -112,8 +112,12 @@ class ImagrUser(AbstractUser):
             if rel is not None:
                 rel.friendship = 3
             else:
-                rel = Relationship(left=self, right=other, follower_status=0, friendship=3)
-        raise NotImplementedError
+                rel = Relationship(
+                    left=self, right=other,
+                    follower_status=0, friendship=3
+                    )
+            rel.full_clean()
+            rel.save()
 
     def end_friendship(self, other):
         """Self terminates friendship with other
@@ -187,7 +191,7 @@ class Relationship(models.Model):
         related_name='relationships_to'
     )
     follower_status = models.IntegerField(choices=FOLLOWER_STATUSES)
-    friendship = models.NullBooleanField(null=True, blank=True, default=None)
+    friendship = models.IntegerField(choices=FRIEND_STATUSES)
 
     class Meta:
         unique_together = ('left', 'right')
