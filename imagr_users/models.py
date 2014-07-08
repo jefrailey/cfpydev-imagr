@@ -99,7 +99,20 @@ class ImagrUser(AbstractUser):
 
         This will not create a relationship if one does not already exist
         """
-        raise NotImplementedError
+        if other not in self.friends():
+            rel = self._relationship_with(other)
+            if rel is not None:
+                for slot in ['left', 'right']:
+                    if getattr(rel, slot) == self:
+                        bitmask = FOLLOWING_BITS[slot]
+                        rel.friendship = rel.friendship | bitmask
+                        break
+            else:
+                rel = Relationship(
+                    left=self, right=other, follower_status=0, friendship=1
+                )
+            rel.full_clean()
+            rel.save()
 
     def accept_friendship(self, other):
         """Self accepts a friendship request from other
