@@ -15,12 +15,19 @@ FOLLOWER_STATUSES = (
     (3, u'both following'),
 )
 
-FOLLOWER_SYMBOLS = {
+RELATIONSHIP_SYMBOLS = {
     0: u' x ',
     1: u' ->',
     2: u'<- ',
     3: u'<->',
 }
+
+FRIEND_STATUSES = (
+    (0, u'not friends'),
+    (1, u'left requesting right'),
+    (2, u'right requesting left'),
+    (3, u'friends'),
+)
 
 
 class ImagrUser(AbstractUser):
