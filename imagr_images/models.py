@@ -1,5 +1,7 @@
 import datetime
 from django.conf import settings
+from django.template.defaultfilters import escape
+from django.core.urlresolvers import reverse
 from django.db import models
 import os.path
 
@@ -35,7 +37,7 @@ class Photo(models.Model):
     date_uploaded = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
     published = models.IntegerField(choices=PRIVACY_LEVELS)
-    image_size = image.storage
+    image_size = models.IntegerField(default=0, editable=False)
 
     def __unicode__(self):
         return self.title
@@ -46,6 +48,18 @@ class Photo(models.Model):
     published_between.admin_order_field = 'published_between'
     published_between.boolean = True
     published_between.short_description = 'Published in selected range'
+
+    def owner_link(self):
+        return '<a href="%s">%s</a>' % (reverse(
+            "admin:imagr_users_imagruser_change", args=(self.owner.id,)), escape(self.owner)
+        )
+
+    owner_link.allow_tags = True
+    owner_link.short_description = "owner"
+
+    def save(self, *args, **kwargs):
+        self.image_size = self.image.size
+        super(Photo, self).save(*args, **kwargs)
 
 
 class Album(models.Model):
@@ -70,3 +84,11 @@ class Album(models.Model):
 
     def __unicode__(self):
         return self.title
+
+    def owner_link(self):
+        return '<a href="%s">%s</a>' % (reverse(
+            "admin:imagr_users_imagruser_change", args=(self.owner.id,)), escape(self.owner)
+        )
+
+    owner_link.allow_tags = True
+    owner_link.short_description = "owner"
