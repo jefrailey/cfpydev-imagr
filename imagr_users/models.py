@@ -121,6 +121,8 @@ class ImagrUser(AbstractUser):
         if other not in self.friends():
             rel = self._relationship_with(other)
             rel.friendship = 0
+            rel.full_clean()
+            rel.save()
 
     def friends(self):
         """Return queryset of self's friends"""
