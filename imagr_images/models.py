@@ -3,7 +3,6 @@ from django.conf import settings
 from django.db import models
 import os.path
 
-
 PRIVACY_LEVELS = (
     (0, 'Private'),
     (1, 'Public'),
@@ -36,9 +35,17 @@ class Photo(models.Model):
     date_uploaded = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
     published = models.IntegerField(choices=PRIVACY_LEVELS)
+    image_size = image.storage
 
     def __unicode__(self):
         return self.title
+
+    def published_between(self, start, end):
+        return end <= self.date_uploaded <= start
+
+    published_between.admin_order_field = 'published_between'
+    published_between.boolean = True
+    published_between.short_description = 'Published in selected range'
 
 
 class Album(models.Model):
