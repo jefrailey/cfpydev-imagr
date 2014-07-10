@@ -1,0 +1,11 @@
+
+{% if albums %}
+    <ul>
+    {% for album in albums %}
+        <li><a href="/imagr_images/{{album.owner.id}}/album/{{album.id}}">{{ album.title }}</a></li>
+        <img src="{{album.cover.image.url}}" alt=""/>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>You do not have any albums to display.</p>
+{% endif %}

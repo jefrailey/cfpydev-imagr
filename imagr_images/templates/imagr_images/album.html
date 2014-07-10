@@ -1,0 +1,9 @@
+
+{{title}}
+{% if photos %}
+    {% for photo in photos %}
+        <img src="{{photo.image.url}}" alt=""/>
+    {% endfor %}
+{% else %}
+    <p>You do not have any photos in this album.</p>
+{% endif %}
