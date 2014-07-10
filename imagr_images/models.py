@@ -101,9 +101,6 @@ class Album(models.Model):
             return None
 
     def all_photos(self):
-        try:
-            _all_photos = self.photos.all()
-            print _all_photos
-            return _all_photos
-        except IndexError:
-            return None
+        _all_photos = self.photos.all()
+        print _all_photos
+        return _all_photos
