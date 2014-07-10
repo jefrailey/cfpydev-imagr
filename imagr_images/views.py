@@ -15,7 +15,7 @@ def home_page(request, owner):
     image from each album
     """
     if request.user.is_authenticated():
-        albums = Album.objects.filter(owner=request.user.id)
+        albums = Album.objects.filter(owner=request.user)
         context = {'albums': albums}
         return render(request, 'imagr_images/home.html', context)
 
@@ -25,7 +25,7 @@ def home_page(request, owner):
 
 def album_page(request, album_id, owner_id):
     u"""shows logged-in users a display of photos in a single album"""
-    album = Album.objects.get(pk=album_id)
+    album = Album.objects.get(pk=album_id, owner=request.user)
     photos = album.all_photos()
     title = album.title
     context = {'photos': photos, 'title': title}
