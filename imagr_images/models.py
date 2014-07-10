@@ -92,3 +92,18 @@ class Album(models.Model):
 
     owner_link.allow_tags = True
     owner_link.short_description = "owner"
+
+    def cover(self):
+        try:
+            _cover = self.cover_photo.all()[0]
+            return _cover
+        except IndexError:
+            return None
+
+    def all_photos(self):
+        try:
+            _all_photos = self.photos.all()
+            print _all_photos
+            return _all_photos
+        except IndexError:
+            return None

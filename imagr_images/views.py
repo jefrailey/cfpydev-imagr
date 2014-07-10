@@ -15,16 +15,21 @@ def home_page(request, owner):
     image from each album
     """
     if request.user.is_authenticated():
-        return Response(_get_owner_album(request.user.id))
+        albums = Album.objects.filter(owner=request.user.id)
+        context = {'albums': albums}
+        return render(request, 'imagr_images/home.html', context)
+
+# def _get_owner_album(owner_id):
+#     return Album.objects.filter(owner=owner_id)
 
 
-def _get_owner_album(owner_id):
-    return Album.objects.filter(owner=owner_id)
-
-
-def album_page():
+def album_page(request, album_id, owner_id):
     u"""shows logged-in users a display of photos in a single album"""
-    pass
+    album = Album.objects.get(pk=album_id)
+    photos = album.all_photos()
+    title = album.title
+    context = {'photos': photos, 'title': title}
+    return render(request, 'imagr_images/album.html', context)
 
 
 def photo_page():
