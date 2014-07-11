@@ -68,9 +68,9 @@ DATABASES = {
         'PASSWORD': '',
         'HOST': ''
     },
-    'OPTIONS': {
-        'autocommit': True,
-    }
+    # 'OPTIONS': {
+    #     'autocommit': True,
+    # }
 }
 
 # Internationalization

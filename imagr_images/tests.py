@@ -5,7 +5,6 @@ from imagr_images.models import Photo, Album
 from imagr_users.models import ImagrUser
 from django.core.files import File
 import os
-import datetime
 
 
 class ImagesTests(TestCase):
@@ -27,19 +26,19 @@ class ImagesTests(TestCase):
 
         with open("test_images/1.png", 'rb') as file_:
             a_photo = File(file_)
-            photo = Photo(title=u"tester's Photo", image=a_photo,
+            photo = Photo(title=u"Tester's Photo", image=a_photo,
                           privacy=0, owner=user)
             photo.save()
 
         with open("test_images/2.png", 'rb') as file_:
             a_photo = File(file_)
-            photo = Photo(title=u"tester's Second Photo", image=a_photo,
+            photo = Photo(title=u"Tester's Second Photo", image=a_photo,
                           privacy=0, owner=user)
             photo.save()
 
-        album = Album(title="tester's Album", privacy=0, owner=user)
+        album = Album(title="Tester's Album", privacy=0, owner=user)
         album.save()
-        album2 = Album(title="tester's Second Album", privacy=0, owner=user)
+        album2 = Album(title="Tester's Second Album", privacy=0, owner=user)
         album2.save()
 
     def tearDown(self):
