@@ -1,96 +1,115 @@
-"""
-Django settings for imagr_site project.
-
-For more information on this file, see
-https://docs.djangoproject.com/en/1.6/topics/settings/
-
-For the full list of settings and their values, see
-https://docs.djangoproject.com/en/1.6/ref/settings/
-"""
-
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+from configurations import Configuration, values
 import os
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
+class Common(Configuration):
+    u"""
+    Django settings for imagr_site project.
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '_0)ionh8p(-xw=uh-3_8un)^xo+=&obsad&lhohn-d93j(p!21'
+    For more information on this file, see
+    https://docs.djangoproject.com/en/1.6/topics/settings/
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+    For the full list of settings and their values, see
+    https://docs.djangoproject.com/en/1.6/ref/settings/
+    """
+    DEBUG = True
 
-TEMPLATE_DEBUG = True
-
-ALLOWED_HOSTS = []
-
-AUTH_USER_MODEL = 'imagr_users.ImagrUser'
-
-
-# Application definition
-
-INSTALLED_APPS = (
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'easy_thumbnails',
-    'imagr_images',
-    'imagr_users',
-)
-
-MIDDLEWARE_CLASSES = (
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-)
-
-ROOT_URLCONF = 'imagr_site.urls'
-
-WSGI_APPLICATION = 'imagr_site.wsgi.application'
+    # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+    BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
-# Database
-# https://docs.djangoproject.com/en/1.6/ref/settings/#databases
+    # Quick-start development settings - unsuitable for production
+    # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'django_imagr',
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': ''
-    },
-    # 'OPTIONS': {
-    #     'autocommit': True,
-    # }
-}
+    # SECURITY WARNING: keep the secret key used in production secret!
+    SECRET_KEY = '_0)ionh8p(-xw=uh-3_8un)^xo+=&obsad&lhohn-d93j(p!21'
 
-# Internationalization
-# https://docs.djangoproject.com/en/1.6/topics/i18n/
+    # SECURITY WARNING: don't run with debug turned on in production!
+    DEBUG = True
 
-LANGUAGE_CODE = 'en-us'
+    TEMPLATE_DEBUG = True
 
-TIME_ZONE = 'UTC'
+    ALLOWED_HOSTS = []
 
-USE_I18N = True
-
-USE_L10N = True
-
-USE_TZ = True
+    AUTH_USER_MODEL = 'imagr_users.ImagrUser'
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.6/howto/static-files/
+    # Application definition
 
-STATIC_URL = '/static/'
+    INSTALLED_APPS = (
+        'django.contrib.admin',
+        'django.contrib.auth',
+        'django.contrib.contenttypes',
+        'django.contrib.sessions',
+        'django.contrib.messages',
+        'django.contrib.staticfiles',
+        'easy_thumbnails',
+        'imagr_images',
+        'imagr_users',
+    )
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR + "/media/"
+    MIDDLEWARE_CLASSES = (
+        'django.contrib.sessions.middleware.SessionMiddleware',
+        'django.middleware.common.CommonMiddleware',
+        'django.middleware.csrf.CsrfViewMiddleware',
+        'django.contrib.auth.middleware.AuthenticationMiddleware',
+        'django.contrib.messages.middleware.MessageMiddleware',
+        'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    )
+
+    ROOT_URLCONF = 'imagr_site.urls'
+
+    WSGI_APPLICATION = 'imagr_site.wsgi.application'
+
+
+    # Database
+    # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
+
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'django_imagr',
+            'USER': '',
+            'PASSWORD': '',
+            'HOST': ''
+        },
+        # 'OPTIONS': {
+        #     'autocommit': True,
+        # }
+    }
+
+    # Internationalization
+    # https://docs.djangoproject.com/en/1.6/topics/i18n/
+
+    LANGUAGE_CODE = 'en-us'
+
+    TIME_ZONE = 'UTC'
+
+    USE_I18N = True
+
+    USE_L10N = True
+
+    USE_TZ = True
+
+
+    # Static files (CSS, JavaScript, Images)
+    # https://docs.djangoproject.com/en/1.6/howto/static-files/
+
+    STATIC_URL = '/static/'
+
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = BASE_DIR + "/media/"
+
+
+class Dev(Common):
+    u"""
+    The in-development settings and the default configuration.
+    """
+    pass
+
+
+class Prod(Common):
+    u"""
+    The in-production settings.
+    """
+    SECRET_KEY = values.SecretValue()
