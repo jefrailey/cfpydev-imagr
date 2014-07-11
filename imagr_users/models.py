@@ -133,7 +133,7 @@ class ImagrUser(AbstractUser):
     def end_friendship(self, other):
         """Self terminates friendship with other
         """
-        if other not in self.friends():
+        if other in self.friends():
             rel = self._relationship_with(other)
             rel.friendship = 0
             rel.full_clean()
