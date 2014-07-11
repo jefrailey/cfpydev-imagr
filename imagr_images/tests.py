@@ -62,16 +62,33 @@ class ImagesTests(TestCase):
             self.assertGreater(photo.image_size, 0)
 
     def test_owner_link(self):
-        u"""Album test"""
+        u"""Owner link test"""
         for photo in Photo.objects.all():
             self.assertEqual(photo.owner_link(), '<a href="%s">%s</a>' % (reverse(
             "admin:imagr_users_imagruser_change", args=(photo.owner.id,)), escape(photo.owner)
         ))
 
+    def test_album_has_photo(self):
+        u"""Album test"""
+        album = Album.objects.all()[0]
+        print album.photos.all()
+        self._add_photos_to_album(album)
+        for photo in Photo.objects.all():
+            self.assertIn(photo, album.photos.all())
+
     # def test_cover(self):
     #     u"""Album test"""
-    #     pass
+    #     album = test_album[0]
+    #     album
+    #     album.cover_photo = Photo.objects.all()[0]
 
     # def test_all_photos(self):
     #     u"""Album test"""
     #     pass
+
+    def _add_photos_to_album(self, album):
+        for photo in Photo.objects.all():
+            photo = photo.albums
+
+    def _add_cover_photo(self, photo, album):
+        album.cover_photo = photo
