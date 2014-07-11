@@ -24,22 +24,27 @@ class ImagesTests(TestCase):
         user = ImagrUser(username="tester")
         user.save()
 
-        with open("test_images/1.png", 'rb') as file_:
-            a_photo = File(file_)
-            photo = Photo(title=u"Tester's Photo", image=a_photo,
-                          privacy=0, owner=user)
-            photo.save()
+        test_dir = os.listdir(os.getcwd() + "/test_data/test_pics")
+        test_dir = \
+            [os.getcwd() + "/test_data/test_pics/" + name for name in test_dir]
 
-        with open("test_images/2.png", 'rb') as file_:
-            a_photo = File(file_)
-            photo = Photo(title=u"Tester's Second Photo", image=a_photo,
-                          privacy=0, owner=user)
-            photo.save()
+        test_albums = [u"Tester's Album", u"Tester's Second Album"]
 
-        album = Album(title="Tester's Album", privacy=0, owner=user)
-        album.save()
-        album2 = Album(title="Tester's Second Album", privacy=0, owner=user)
-        album2.save()
+        for pic in test_dir:
+            with open(pic, 'r') as file_:
+                a_photo = File(file_)
+                photo = Photo()
+                photo.image = a_photo
+                photo.owner = user
+                photo.published = 1
+                photo.save()
+
+        for test_album in test_albums:
+            album = Album()
+            album.title = test_album
+            album.owner = user
+            album.published = 1
+            album.save()
 
     def tearDown(self):
         # reset MEDIA_ROOT
@@ -53,16 +58,16 @@ class ImagesTests(TestCase):
     def test_save(self):
         u"""Photo test"""
         photo = Photo.objects.all()[0]
-        self.assertGreater(photo, 0)
+        self.assertGreater(photo.image_size, 0)
 
-    def test_owner_link(self):
-        u"""Album test"""
-        pass
+    # def test_owner_link(self):
+    #     u"""Album test"""
+    #     pass
 
-    def test_cover(self):
-        u"""Album test"""
-        pass
+    # def test_cover(self):
+    #     u"""Album test"""
+    #     pass
 
-    def test_all_photos(self):
-        u"""Album test"""
-        pass
+    # def test_all_photos(self):
+    #     u"""Album test"""
+    #     pass
