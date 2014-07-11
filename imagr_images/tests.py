@@ -70,25 +70,41 @@ class ImagesTests(TestCase):
 
     def test_album_has_photo(self):
         u"""Album test"""
-        album = Album.objects.all()[0]
-        print album.photos.all()
-        self._add_photos_to_album(album)
+        album = self._create_album()
+        self._add_all_photos_to_album(album)
         for photo in Photo.objects.all():
             self.assertIn(photo, album.photos.all())
 
-    # def test_cover(self):
-    #     u"""Album test"""
-    #     album = test_album[0]
-    #     album
-    #     album.cover_photo = Photo.objects.all()[0]
+    def test_cover(self):
+        u"""Album test"""
+        album = self._create_album()
+        photo = Photo.objects.all()[0]
+        album.photos.add(photo)
+        self._add_cover_photo(photo, album)
+        print album.cover_photo.all()[0]
+        self.assertEquals(album.cover_photo.all()[0], photo)
 
     # def test_all_photos(self):
     #     u"""Album test"""
     #     pass
 
-    def _add_photos_to_album(self, album):
+    def _add_all_photos_to_album(self, album):
         for photo in Photo.objects.all():
-            photo = photo.albums
+            album.photos.add(photo)
 
     def _add_cover_photo(self, photo, album):
-        album.cover_photo = photo
+        album.cover_photo.add(photo)
+
+    def _create_album(self):
+        album = Album(
+            title=self._name_generator(),
+            owner=ImagrUser.objects.all()[0],
+            published=1
+            )
+        album.save()
+        return album
+
+    def _name_generator(self):
+        names = [chr(n) for n in xrange(97, 123)]
+        for name in names:
+            yield name
