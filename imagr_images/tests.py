@@ -84,15 +84,26 @@ class ImagesTests(TestCase):
         for photo in Photo.objects.all():
             self.assertIn(photo, album.photos.all())
 
-    def test_cover(self):
+    def test_cover_photo_exits(self):
         u"""Album test"""
         album = self._create_album()
         photo = Photo.objects.all()[0]
         album.photos.add(photo)
         self._add_cover_photo(photo, album)
-        print album.cover_photo.all()[0]
         self.assertEquals(album.cover_photo.all()[0], photo)
 
+    def test_cover_function_returns_cover_photo(self):
+        album = self._create_album()
+        photo = Photo.objects.all()[0]
+        album.photos.add(photo)
+        self._add_cover_photo(photo, album)
+        self.assertEquals(album.cover(), photo)
+
+    def test_all_photos_returns_all_photos(self):
+        album = self._create_album()
+        self._add_all_photos_to_album(album)
+        for photo in album.photos.all():
+            self.assertIn(photo, album.all_photos())
 
     def _add_all_photos_to_album(self, album):
         for photo in Photo.objects.all():
