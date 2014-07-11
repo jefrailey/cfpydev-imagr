@@ -34,9 +34,16 @@ class UserTests(TestCase):
         user.save()
         other.save()
         user.follow(other)
-        self.assertTrue(Relationship.objects.all().exists())
+        self.assertEqual(Relationship.objects.all()[0].follower_status, 1)
         user.unfollow(other)
         self.assertEqual(Relationship.objects.all()[0].follower_status, 0)
+
+    def test_request_friendship(self):
+        user = ImagrUser(username=self.generator.next())
+        other = ImagrUser(username=self.generator.next())
+        user.save()
+        other.save()
+        user.follow(other)
 
     def _name_generator(self):
         names = [chr(n) for n in xrange(97, 123)]
