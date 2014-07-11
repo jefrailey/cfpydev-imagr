@@ -60,9 +60,9 @@ class ImagesTests(TestCase):
         photo = Photo.objects.all()[0]
         self.assertGreater(photo.image_size, 0)
 
-    # def test_owner_link(self):
-    #     u"""Album test"""
-    #     pass
+    def test_owner_link(self):
+        u"""Album test"""
+        pass
 
     # def test_cover(self):
     #     u"""Album test"""
