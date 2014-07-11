@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse as Response
 from imagr_images.models import Photo
 from imagr_images.models import Album
+# from easy_thumbnails.files import get_thumbnailer
 
 
 # Create your views here.
@@ -16,14 +17,11 @@ def home_page(request, owner):
     """
     if request.user.is_authenticated():
         albums = Album.objects.filter(owner=request.user)
-        context = {'albums': albums}
+        context = {'owner': owner, 'albums': albums}
         return render(request, 'imagr_images/home.html', context)
 
-# def _get_owner_album(owner_id):
-#     return Album.objects.filter(owner=owner_id)
 
-
-def album_page(request, album_id, owner_id):
+def album_page(request, album_id):
     u"""shows logged-in users a display of photos in a single album"""
     album = Album.objects.get(pk=album_id, owner=request.user)
     photos = album.all_photos()
@@ -32,13 +30,16 @@ def album_page(request, album_id, owner_id):
     return render(request, 'imagr_images/album.html', context)
 
 
-def photo_page():
+def photo_page(request, photo_id):
     u"""shows logged-in users a single photo along with details about it."""
-    pass
+    photo = Photo.objects.get(pk=photo_id)
+    context = {'photo': photo}
+    return render(request, 'imagr_images/photo.html', context)
 
 
-def stream_page():
+def stream_page(request):
     u"""shows users their most recent photos along with recent photos uploaded
     by friends or those they are following.
     """
-    pass
+    context = {'owner': request.user}
+    return render(request, 'imagr_images/stream.html', context)

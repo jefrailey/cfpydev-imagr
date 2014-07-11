@@ -1,9 +1,12 @@
 
-{{title}}
+<h1>{{title}}</h1>
+
 {% if photos %}
+    {% load thumbnail %}
     {% for photo in photos %}
-        <img src="{{photo.image.url}}" alt=""/>
+        <a href="/imagr_images/photo/{{photo.pk}}"><img src="{% thumbnail photo.image 50x50 crop %}" alt=""/></a>
     {% endfor %}
 {% else %}
     <p>You do not have any photos in this album.</p>
 {% endif %}
+

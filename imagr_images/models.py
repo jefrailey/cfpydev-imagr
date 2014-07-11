@@ -102,5 +102,4 @@ class Album(models.Model):
 
     def all_photos(self):
         _all_photos = self.photos.all()
-        print _all_photos
         return _all_photos
