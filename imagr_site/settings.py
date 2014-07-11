@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'easy_thumbnails',
     'imagr_images',
     'imagr_users',
 )
@@ -67,9 +68,9 @@ DATABASES = {
         'PASSWORD': '',
         'HOST': ''
     },
-    'OPTIONS': {
-        'autocommit': True,
-    }
+    # 'OPTIONS': {
+    #     'autocommit': True,
+    # }
 }
 
 # Internationalization
@@ -91,5 +92,5 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-MEDIA_URL = 'http://localhost:8000/media/'
+MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR + "/media/"

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Imagr</title>
+
+        {% load staticfiles %}
+        <link rel="stylesheet" type="text/css" href="{% static 'imagr_images/style.css' %}"/>
+    </head>
+    <body>
+    <div id="content">
+    <h1> Welcome!</h1>
+        {% if albums %}
+            {% load thumbnail %}
+            <h3>Your current albums:</h3>
+            {% for album in albums %}
+                <div class="pic">
+                <a href="/imagr_images/photo/{{album.cover.id}}"><img src="{% thumbnail album.cover.image 50x50 crop %}" alt=""/></a>
+                <a href="/imagr_images/album/{{album.id}}">{{ album.title }}</a><br>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>You do not have any albums to display.</p>
+        {% endif %}
+
+    <a href="/imagr_users/stream"><h4> Want to see what your friends have been doing? </h4></a>
+    </div>
+    </body>

@@ -1,0 +1,8 @@
+
+<h3>See what your friends have been doing!</h3>
+{% if photos %}
+    {% load thumbnail %}
+    {% for photo in photos %}
+        <a href="/imagr_images/photo/{{photo.pk}}"><img src="{% thumbnail photo.image 50x50 crop %}" alt=""/></a>
+    {% endfor %}
+{% endif %}

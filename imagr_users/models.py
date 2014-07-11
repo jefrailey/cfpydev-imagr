@@ -96,8 +96,6 @@ class ImagrUser(AbstractUser):
 
     def request_friendship(self, other):
         """Self requests a friendship with other
-
-        This will not create a relationship if one does not already exist
         """
         if other not in self.friends():
             rel = self._relationship_with(other)
@@ -135,7 +133,7 @@ class ImagrUser(AbstractUser):
     def end_friendship(self, other):
         """Self terminates friendship with other
         """
-        if other not in self.friends():
+        if other in self.friends():
             rel = self._relationship_with(other)
             rel.friendship = 0
             rel.full_clean()
@@ -193,6 +191,17 @@ class ImagrUser(AbstractUser):
                 pass
         return rel
 
+    def stream_photos(self):
+        from imagr_images.models import Photo
+        import datetime
+        following = self.following()
+        our_list = []
+        for followee in following:
+            our_list.extend(Photo.objects.filter(owner=followee).filter(
+                date_uploaded__gte=datetime.date.today()
+            ))
+        return our_list
+
 
 class Relationship(models.Model):
     left = models.ForeignKey(
@@ -222,6 +231,6 @@ class Relationship(models.Model):
         right = self.right
         l2r = Q(left=left) & Q(right=right)
         r2l = Q(left=right) & Q(right=left)
-        if self.__class__.objects.filter(Q(l2r | r2l)).exists():
+        if self.__class__.objects.filter(Q(l2r | r2l)).exists() and not self.id:
             msg = u"A relationship already exists between {} and {}"
             raise ValidationError(msg.format(left, right))

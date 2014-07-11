@@ -42,12 +42,12 @@ class Photo(models.Model):
     def __unicode__(self):
         return self.title
 
-    def published_between(self, start, end):
-        return end <= self.date_uploaded <= start
+    # def published_between(self, start, end):
+    #     return end <= self.date_uploaded <= start
 
-    published_between.admin_order_field = 'published_between'
-    published_between.boolean = True
-    published_between.short_description = 'Published in selected range'
+    # published_between.admin_order_field = 'published_between'
+    # published_between.boolean = True
+    # published_between.short_description = 'Published in selected range'
 
     def owner_link(self):
         return '<a href="%s">%s</a>' % (reverse(
@@ -92,3 +92,14 @@ class Album(models.Model):
 
     owner_link.allow_tags = True
     owner_link.short_description = "owner"
+
+    def cover(self):
+        try:
+            _cover = self.cover_photo.all()[0]
+            return _cover
+        except IndexError:
+            return None
+
+    def all_photos(self):
+        _all_photos = self.photos.all()
+        return _all_photos

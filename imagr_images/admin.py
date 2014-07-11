@@ -35,7 +35,7 @@ class PhotoSizeFilter(admin.SimpleListFilter):
 
 class AlbumAdmin(admin.ModelAdmin):
     readonly_fields = ('date_created', 'date_modified')
-    list_display = ('owner_link', 'title',)
+    list_display = ('title', 'owner_link')
     search_fields = (
         'owner__username', 'owner__first_name',
         'owner__last_name', 'owner__email'
@@ -44,7 +44,7 @@ class AlbumAdmin(admin.ModelAdmin):
 
 class PhotoAdmin(admin.ModelAdmin):
     readonly_fields = ('date_uploaded', 'date_modified')
-    list_display = ('owner_link', 'title', 'image_size', 'date_uploaded',)
+    list_display = ('title', 'owner_link', 'image_size', 'date_uploaded',)
     list_filter = ('date_uploaded', PhotoSizeFilter)
     search_fields = (
         'owner__username', 'owner__first_name',
