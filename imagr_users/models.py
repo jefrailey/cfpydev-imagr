@@ -96,8 +96,6 @@ class ImagrUser(AbstractUser):
 
     def request_friendship(self, other):
         """Self requests a friendship with other
-
-        This will not create a relationship if one does not already exist
         """
         if other not in self.friends():
             rel = self._relationship_with(other)
