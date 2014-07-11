@@ -42,12 +42,12 @@ class Photo(models.Model):
     def __unicode__(self):
         return self.title
 
-    def published_between(self, start, end):
-        return end <= self.date_uploaded <= start
+    # def published_between(self, start, end):
+    #     return end <= self.date_uploaded <= start
 
-    published_between.admin_order_field = 'published_between'
-    published_between.boolean = True
-    published_between.short_description = 'Published in selected range'
+    # published_between.admin_order_field = 'published_between'
+    # published_between.boolean = True
+    # published_between.short_description = 'Published in selected range'
 
     def owner_link(self):
         return '<a href="%s">%s</a>' % (reverse(
