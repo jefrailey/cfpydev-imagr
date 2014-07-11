@@ -47,14 +47,11 @@ class ImagesTests(TestCase):
             album.published = 1
             album.save()
 
+        self.generator = self._name_generator()
+
     def tearDown(self):
         # reset MEDIA_ROOT
         settings.MEDIA_ROOT = self._old_MEDIA_ROOT
-
-    # def test_published_between_true(self):
-    #     u"""Photo test"""
-    #     photo = Photo.objects.all()[0]
-    #     self.assertEqual(photo.published_between(, False)
 
     def test_save(self):
         u"""Photo test"""
@@ -68,7 +65,19 @@ class ImagesTests(TestCase):
             "admin:imagr_users_imagruser_change", args=(photo.owner.id,)), escape(photo.owner)
         ))
 
-    def test_album_has_photo(self):
+    def test_album_has_no_photos(self):
+        u"""Album test"""
+        album = self._create_album()
+        self.assertFalse(album.photos.all().exists())
+
+    def test_album_has_one_photo(self):
+        u"""Album test"""
+        album = self._create_album()
+        photo = Photo.objects.all()[0]
+        album.photos.add(photo)
+        self.assertEquals(album.photos.get(pk=photo.pk), photo)
+
+    def test_album_has_multiple_photos(self):
         u"""Album test"""
         album = self._create_album()
         self._add_all_photos_to_album(album)
@@ -84,9 +93,6 @@ class ImagesTests(TestCase):
         print album.cover_photo.all()[0]
         self.assertEquals(album.cover_photo.all()[0], photo)
 
-    # def test_all_photos(self):
-    #     u"""Album test"""
-    #     pass
 
     def _add_all_photos_to_album(self, album):
         for photo in Photo.objects.all():
@@ -97,7 +103,7 @@ class ImagesTests(TestCase):
 
     def _create_album(self):
         album = Album(
-            title=self._name_generator(),
+            title=self.generator,
             owner=ImagrUser.objects.all()[0],
             published=1
             )
