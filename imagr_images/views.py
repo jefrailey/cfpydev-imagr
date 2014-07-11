@@ -35,11 +35,3 @@ def photo_page(request, photo_id):
     photo = Photo.objects.get(pk=photo_id)
     context = {'photo': photo}
     return render(request, 'imagr_images/photo.html', context)
-
-
-def stream_page(request):
-    u"""shows users their most recent photos along with recent photos uploaded
-    by friends or those they are following.
-    """
-    context = {'owner': request.user}
-    return render(request, 'imagr_images/stream.html', context)

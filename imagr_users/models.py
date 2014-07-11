@@ -193,6 +193,17 @@ class ImagrUser(AbstractUser):
                 pass
         return rel
 
+    def stream_photos(self):
+        from imagr_images.models import Photo
+        import datetime
+        following = self.following()
+        our_list = []
+        for followee in following:
+            our_list.extend(Photo.objects.filter(owner=followee).filter(
+                date_uploaded__gte=datetime.date.today()
+            ))
+        return our_list
+
 
 class Relationship(models.Model):
     left = models.ForeignKey(
