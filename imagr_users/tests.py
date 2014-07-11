@@ -36,7 +36,7 @@ class UserTests(TestCase):
         user.follow(other)
         self.assertTrue(Relationship.objects.all().exists())
         user.unfollow(other)
-        self.assertFalse(Relationship.objects.all().exists())
+        self.assertEqual(Relationship.objects.all()[0].follower_status, 0)
 
     def _name_generator(self):
         names = [chr(n) for n in xrange(97, 123)]

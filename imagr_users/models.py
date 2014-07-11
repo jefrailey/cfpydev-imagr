@@ -233,6 +233,6 @@ class Relationship(models.Model):
         right = self.right
         l2r = Q(left=left) & Q(right=right)
         r2l = Q(left=right) & Q(right=left)
-        if self.__class__.objects.filter(Q(l2r | r2l)).exists():
+        if self.__class__.objects.filter(Q(l2r | r2l)).exists() and not self.id:
             msg = u"A relationship already exists between {} and {}"
             raise ValidationError(msg.format(left, right))
