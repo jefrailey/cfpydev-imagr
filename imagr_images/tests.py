@@ -1,5 +1,7 @@
 from django.test import TestCase
 from django.test.client import RequestFactory
+from django.core.urlresolvers import reverse
+from django.template.defaultfilters import escape
 from django.conf import settings
 from imagr_images.models import Photo, Album
 from imagr_users.models import ImagrUser
@@ -56,12 +58,15 @@ class ImagesTests(TestCase):
 
     def test_save(self):
         u"""Photo test"""
-        photo = Photo.objects.all()[0]
-        self.assertGreater(photo.image_size, 0)
+        for photo in Photo.objects.all():
+            self.assertGreater(photo.image_size, 0)
 
     def test_owner_link(self):
         u"""Album test"""
-        pass
+        for photo in Photo.objects.all():
+            self.assertEqual(photo.owner_link(), '<a href="%s">%s</a>' % (reverse(
+            "admin:imagr_users_imagruser_change", args=(photo.owner.id,)), escape(photo.owner)
+        ))
 
     # def test_cover(self):
     #     u"""Album test"""
