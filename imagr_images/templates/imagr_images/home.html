@@ -1,8 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="utf-8">
+<title>Imagr</title>
+</head>
+
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'imagr_images/style.css' %}"/>
+
+<body>
+
 <h1> Welcome!</h1>
 
 {% if albums %}
     {% load thumbnail %}
-    <h3>These are all your albums:</h3>
+    <h3>Your current albums:</h3>
     <ul>
     {% for album in albums %}
         <li><a href="/imagr_images/album/{{album.id}}">{{ album.title }}</a></li>
@@ -14,3 +27,5 @@
 {% endif %}
 
 <a href="/imagr_users/stream"><h4> Want to see what your friends have been doing? </h4></a>
+
+</body>

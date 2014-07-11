@@ -10,7 +10,6 @@ import os
 class ImagesTests(TestCase):
     def setUp(self):
         u"""Create a user and image that can be used in all tests.
-
         Create a temp folder for images to be stored in, so test images
         don't clog up regular media folder."""
 
