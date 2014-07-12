@@ -23,7 +23,6 @@ class Common(Configuration):
 
     # SECURITY WARNING: keep the secret key used in production secret!
     SECRET_KEY = '_0)ionh8p(-xw=uh-3_8un)^xo+=&obsad&lhohn-d93j(p!21'
-
     # SECURITY WARNING: don't run with debug turned on in production!
     DEBUG = True
 
@@ -106,7 +105,6 @@ class Dev(Common):
     The in-development settings and the default configuration.
     """
     pass
-
 
 class Prod(Common):
     u"""
