@@ -11,5 +11,5 @@ import os
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "imagr_site.settings")
 os.environ.setdefault('DJANGO_CONFIGURATION', 'Dev')
 
-from django.core.wsgi import get_wsgi_application
+from configurations.wsgi import get_wsgi_application
 application = get_wsgi_application()
