@@ -17,23 +17,20 @@ class Common(Configuration):
     # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
     BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
-
     # Quick-start development settings - unsuitable for production
     # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
-
     # SECURITY WARNING: keep the secret key used in production secret!
-    SECRET_KEY = '_0)ionh8p(-xw=uh-3_8un)^xo+=&obsad&lhohn-d93j(p!21'
+    with open('access/secret_key.txt') as f:
+        SECRET_KEY = str(f.read().strip())
+
     # SECURITY WARNING: don't run with debug turned on in production!
     DEBUG = True
 
     TEMPLATE_DEBUG = True
 
-    ALLOWED_HOSTS = []
+    ALLOWED_HOSTS = ["ec2-54-187-91-202.us-west-2.compute.amazonaws.com"]
 
     AUTH_USER_MODEL = 'imagr_users.ImagrUser'
-
-
-    # Application definition
 
     INSTALLED_APPS = (
         'django.contrib.admin',
@@ -60,10 +57,6 @@ class Common(Configuration):
 
     WSGI_APPLICATION = 'imagr_site.wsgi.application'
 
-
-    # Database
-    # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
-
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -76,6 +69,10 @@ class Common(Configuration):
         #     'autocommit': True,
         # }
     }
+
+    with open("access/db_secret_key.txt") as f:
+        DATABASES["default"]['USER'] = str(f.read().strip())[0]
+        DATABASES["default"]['PASSWORD'] = str(f.read().strip())[1]
 
     # Internationalization
     # https://docs.djangoproject.com/en/1.6/topics/i18n/
@@ -90,10 +87,6 @@ class Common(Configuration):
 
     USE_TZ = True
 
-
-    # Static files (CSS, JavaScript, Images)
-    # https://docs.djangoproject.com/en/1.6/howto/static-files/
-
     STATIC_URL = '/static/'
 
     MEDIA_URL = '/media/'
@@ -106,8 +99,19 @@ class Dev(Common):
     """
     pass
 
+
 class Prod(Common):
     u"""
     The in-production settings.
     """
+    BASE_DIR = os.path.dirname(os.path.dirname(__file__))
     SECRET_KEY = values.SecretValue()
+    STATIC_ROOT = BASE_DIR + "/static/"
+
+    CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = True
+    CONN_MAX_AGE = None
+    TEMPLATE_LOADERS = (('django.template.loaders.cached.Loader', (
+        'django.template.loaders.filesystem.Loader',
+    )),
+    )
