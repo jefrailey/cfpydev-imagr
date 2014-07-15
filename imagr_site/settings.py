@@ -14,12 +14,11 @@ class Common(Configuration):
     """
     DEBUG = True
 
-    # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
     BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
     TEMPLATE_DEBUG = True
 
-    ALLOWED_HOSTS = ["ec2-54-187-91-202.us-west-2.compute.amazonaws.com"]
+    ALLOWED_HOSTS = []
 
     AUTH_USER_MODEL = 'imagr_users.ImagrUser'
 
@@ -56,13 +55,8 @@ class Common(Configuration):
             'PASSWORD': '',
             'HOST': ''
         },
-        # 'OPTIONS': {
-        #     'autocommit': True,
-        # }
     }
 
-    # Internationalization
-    # https://docs.djangoproject.com/en/1.6/topics/i18n/
 
     LANGUAGE_CODE = 'en-us'
 
@@ -85,43 +79,55 @@ class Dev(Common):
     u"""
     The in-development settings and the default configuration.
     """
-    with open('imagr_site/access/secret_key.txt', 'rb') as f:
-        SECRET_KEY = str(f.read().strip())
-
-
-class Prod(Common):
-    u"""
-    The in-production settings.
-    """
     BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+    with open(BASE_DIR + '/imagr_site/access/secret_key.txt', 'rb') as f:
+        SECRET_KEY = str(f.read().strip())
+    yes = "yes"
 
-    SECRET_KEY = values.SecretValue()
-    STATIC_ROOT = os.path.join(BASE_DIR, "/imagr_images/static/")
 
-    CSRF_COOKIE_SECURE = True
-    SESSION_COOKIE_SECURE = True
-    CONN_MAX_AGE = None
-    # TEMPLATE_LOADERS = (('django.template.loaders.cached.Loader', (
-    #     'django.template.loaders.filesystem.Loader',
-    # )),
-    # )
+# class Prod(Common):
+#     u"""
+#     The in-production settings.
+#     """
+#     BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+#     with open(BASE_DIR+ '/imagr_site/access/secret_key.txt', 'rb') as f:
+#         SECRET_KEY = str(f.read().strip())
 
-    DEBUG = False
+#     #SECRET_KEY = values.SecretValue()
+#     STATIC_ROOT = os.path.join(BASE_DIR, "/imagr_images/static/")
 
-    # with open("/home/ubuntu/cfpydev-imagr/imagr_site/access/db_secret_key.txt") as f:
-    #     db_user = str(f.readline().strip())
-    #     db_pass = str(f.readline().strip())
+#     ALLOWED_HOSTS = [".ec2-54-191-119-156.us-west-2.compute.amazonaws.com"]
 
-    # DATABASES = {
-    #     'default': {
-    #         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    #         'NAME': 'django_imagr',
-    #         'USER': db_user,
-    #         'PASSWORD': db_pass,
-    #         'HOST': ''
-    #     },
-    #     # 'OPTIONS': {
-    #     #     'autocommit': True,
-    #     # }
-    # }
+#     CSRF_COOKIE_SECURE = True
+#     SESSION_COOKIE_SECURE = True
+#     CONN_MAX_AGE = None
+#     # TEMPLATE_LOADERS = (('django.template.loaders.cached.Loader', (
+#     #     'django.template.loaders.filesystem.Loader',
+#     # )),
+#     # )
+
+#     MIDDLEWARE_CLASSES = (
+#         'django.contrib.sessions.middleware.SessionMiddleware',
+#         'django.middleware.common.CommonMiddleware',
+#         'django.middleware.csrf.CsrfViewMiddleware',
+#         'django.contrib.auth.middleware.AuthenticationMiddleware',
+#         'django.contrib.messages.middleware.MessageMiddleware',
+#         'django.middleware.clickjacking.XFrameOptionsMiddleware',
+#     )
+
+#     DEBUG = False
+
+#     with open("/home/ubuntu/cfpydev-imagr/imagr_site/access/db_secret_key.txt") as f:
+#         db_user = str(f.readline().strip())
+#         db_pass = str(f.readline().strip())
+
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#             'NAME': 'django_imagr',
+#             'USER': db_user,
+#             'PASSWORD': db_pass,
+#             'HOST': ''
+#         },
+#     }
 

@@ -1,9 +1,17 @@
+
+title {
+    font-family: Baskerville, "Palatino Linotype", "Book Antiqua", Palatino, serif;
+}
+
 body {
+    font-family: Baskerville, serif;
     padding-top: 100px;
     padding-left: 100px;
     padding-right: 100px;
     background-color: #FEFFF1;
+
 }
+
 
 .picture {
     border: 12px solid #8B8878;
@@ -13,6 +21,10 @@ body {
     padding: 30px;
 }
 
+.pic_title{
+    padding: 80px;
+}
+
 a {
     color: black;
 }
@@ -20,4 +32,14 @@ a {
 .description {
     padding: 20px;
 
+}
+
+h1 {
+    font-size: 400%;
+}
+
+footer {
+    position: relative;
+    bottom: 0;
+    padding: 50px;
 }
