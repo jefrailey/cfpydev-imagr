@@ -1,3 +1,8 @@
+{% extends "imagr_images/base.html" %}
+
+{% block title %} {{photo.title}} {% endblock %}
+
+{% block body %}
 
 <h1>{{photo.title}}</h1>
 
@@ -8,3 +13,5 @@
 Uploaded on: {{photo.date_uploaded}}<br>
 
 Owner: {{photo.owner}}</p>
+
+{% endblock %}

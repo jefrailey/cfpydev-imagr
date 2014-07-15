@@ -20,8 +20,6 @@ class Common(Configuration):
     # Quick-start development settings - unsuitable for production
     # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
     # SECURITY WARNING: keep the secret key used in production secret!
-    with open('/home/ubuntu/cfpydev-imagr/imagr_site/access/secret_key.txt', 'rb') as f:
-        SECRET_KEY = str(f.read().strip())
 
     # SECURITY WARNING: don't run with debug turned on in production!
     DEBUG = True
@@ -83,7 +81,8 @@ class Common(Configuration):
 
     USE_TZ = True
 
-    STATIC_URL = '/static/'
+    STATIC_URL = '/imagr_images/static/'
+    STATIC_ROOT = BASE_DIR + "imagr_images/static/imagr_images"
 
     MEDIA_URL = '/media/'
     MEDIA_ROOT = BASE_DIR + "/media/"
@@ -93,7 +92,8 @@ class Dev(Common):
     u"""
     The in-development settings and the default configuration.
     """
-    pass
+    with open('imagr_site/access/secret_key.txt', 'rb') as f:
+        SECRET_KEY = str(f.read().strip())
 
 
 class Prod(Common):
@@ -101,14 +101,8 @@ class Prod(Common):
     The in-production settings.
     """
     BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+
     SECRET_KEY = values.SecretValue()
-    print
-    print
-    print
-    print BASE_DIR
-    print
-    print
-    print
     STATIC_ROOT = os.path.join(BASE_DIR, "/imagr_images/static/")
 
     CSRF_COOKIE_SECURE = True
@@ -118,20 +112,20 @@ class Prod(Common):
     #     'django.template.loaders.filesystem.Loader',
     # )),
     # )
-    with open("/home/ubuntu/cfpydev-imagr/imagr_site/access/db_secret_key.txt") as f:
-        db_user = str(f.readline().strip())
-        db_pass = str(f.readline().strip())
+    # with open("/home/ubuntu/cfpydev-imagr/imagr_site/access/db_secret_key.txt") as f:
+    #     db_user = str(f.readline().strip())
+    #     db_pass = str(f.readline().strip())
 
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'django_imagr',
-            'USER': db_user,
-            'PASSWORD': db_pass,
-            'HOST': ''
-        },
-        # 'OPTIONS': {
-        #     'autocommit': True,
-        # }
-    }
+    # DATABASES = {
+    #     'default': {
+    #         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #         'NAME': 'django_imagr',
+    #         'USER': db_user,
+    #         'PASSWORD': db_pass,
+    #         'HOST': ''
+    #     },
+    #     # 'OPTIONS': {
+    #     #     'autocommit': True,
+    #     # }
+    # }
 

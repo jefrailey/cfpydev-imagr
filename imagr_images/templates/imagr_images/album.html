@@ -1,12 +1,23 @@
 
+{% extends "imagr_images/base.html" %}
+
+{% block title %} {{title}} {% endblock %}
+
+{% block body %}
+
 <h1>{{title}}</h1>
 
 {% if photos %}
     {% load thumbnail %}
     {% for photo in photos %}
-        <a href="/imagr_images/photo/{{photo.pk}}"><img src="{% thumbnail photo.image 50x50 crop %}" alt=""/></a>
+        <div class="units-row units-padding">
+        <div class="unit-30 units-padding"><a href="/imagr_images/photo/{{photo.pk}}">
+            <img class="picture" src="{% thumbnail photo.image 50x50 crop %}" alt=""/></a></div>
+            </div>
     {% endfor %}
 {% else %}
     <p>You do not have any photos in this album.</p>
 {% endif %}
+
+{% endblock %}
 

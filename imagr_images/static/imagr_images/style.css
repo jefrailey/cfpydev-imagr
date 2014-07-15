@@ -1,15 +1,15 @@
-html {
-    height: 100%;
+body {
+    padding-top: 100px;
+    padding-left: 100px;
+    padding-right: 100px;
+    background-color: #FEFFF1;
 }
 
-h1 {
-    text-align: center;
+.picture {
+    border: 10px solid #8B8878;
+    border-radius: 5px;
 }
 
-body{
-    color:#272928;
-    padding:0;
-    margin:0;
-    font-family: Helvetica, Sans-Serif;
-    height: 100%;
+a {
+    color: black;
 }
