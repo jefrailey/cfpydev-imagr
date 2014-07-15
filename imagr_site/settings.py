@@ -73,6 +73,21 @@ class Dev(Common):
     The in-development settings and the default configuration.
     """
     BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+    with open(BASE_DIR + '/imagr_site/access/secret_key.txt', 'rb') as f:
+        SECRET_KEY = str(f.read().strip())
+
+    STATIC_URL = '/imagr_images/static/'
+    STATIC_ROOT = BASE_DIR + "/imagr_images/static/imagr_images"
+
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = BASE_DIR + "/media/"
+
+
+class Test(Common):
+    u"""
+    The test settings and the default configuration.
+    """
+    BASE_DIR = os.path.dirname(os.path.dirname(__file__))
     # with open(BASE_DIR + '/imagr_site/access/secret_key.txt', 'rb') as f:
     #     SECRET_KEY = str(f.read().strip())
     SECRET_KEY = "testing_key"
