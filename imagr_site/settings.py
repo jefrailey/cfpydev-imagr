@@ -57,7 +57,6 @@ class Common(Configuration):
         },
     }
 
-
     LANGUAGE_CODE = 'en-us'
 
     TIME_ZONE = 'UTC'
@@ -74,8 +73,9 @@ class Dev(Common):
     The in-development settings and the default configuration.
     """
     BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-    with open(BASE_DIR + '/imagr_site/access/secret_key.txt', 'rb') as f:
-        SECRET_KEY = str(f.read().strip())
+    # with open(BASE_DIR + '/imagr_site/access/secret_key.txt', 'rb') as f:
+    #     SECRET_KEY = str(f.read().strip())
+    SECRET_KEY = "testing_key"
 
     STATIC_URL = '/imagr_images/static/'
     STATIC_ROOT = BASE_DIR + "/imagr_images/static/imagr_images"
