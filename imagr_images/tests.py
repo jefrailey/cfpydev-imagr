@@ -17,10 +17,9 @@ class ImagesTests(TestCase):
 
         TEST_ROOT = os.path.abspath(os.path.dirname(__file__))
 
+        self._old_MEDIA_ROOT = settings.MEDIA_ROOT
         # override MEDIA_ROOT for this test
         settings.MEDIA_ROOT = os.path.join(TEST_ROOT, 'test_data/media/')
-
-        self._old_MEDIA_ROOT = settings.MEDIA_ROOT
 
         self.DJANGO_CONFIGURATION = 'Test'
 
