@@ -1,0 +1,6 @@
+
+Activate your account for {{ site.name }} by clicking:
+
+http://{{ site.domain }}{% url 'registration_activate' activation_key %}
+
+This link is only valid for {{ expiration_days }} days.
