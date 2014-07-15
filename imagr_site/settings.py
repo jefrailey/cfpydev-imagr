@@ -20,7 +20,7 @@ class Common(Configuration):
     # Quick-start development settings - unsuitable for production
     # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
     # SECURITY WARNING: keep the secret key used in production secret!
-    with open('access/secret_key.txt') as f:
+    with open('/home/ubuntu/cfpydev-imagr/imagr_site/access/secret_key.txt', 'rb') as f:
         SECRET_KEY = str(f.read().strip())
 
     # SECURITY WARNING: don't run with debug turned on in production!
@@ -70,10 +70,6 @@ class Common(Configuration):
         # }
     }
 
-    with open("access/db_secret_key.txt") as f:
-        DATABASES["default"]['USER'] = str(f.read().strip())[0]
-        DATABASES["default"]['PASSWORD'] = str(f.read().strip())[1]
-
     # Internationalization
     # https://docs.djangoproject.com/en/1.6/topics/i18n/
 
@@ -106,12 +102,36 @@ class Prod(Common):
     """
     BASE_DIR = os.path.dirname(os.path.dirname(__file__))
     SECRET_KEY = values.SecretValue()
-    STATIC_ROOT = BASE_DIR + "/static/"
+    print
+    print
+    print
+    print BASE_DIR
+    print
+    print
+    print
+    STATIC_ROOT = os.path.join(BASE_DIR, "/imagr_images/static/")
 
     CSRF_COOKIE_SECURE = True
     SESSION_COOKIE_SECURE = True
     CONN_MAX_AGE = None
-    TEMPLATE_LOADERS = (('django.template.loaders.cached.Loader', (
-        'django.template.loaders.filesystem.Loader',
-    )),
-    )
+    # TEMPLATE_LOADERS = (('django.template.loaders.cached.Loader', (
+    #     'django.template.loaders.filesystem.Loader',
+    # )),
+    # )
+    with open("/home/ubuntu/cfpydev-imagr/imagr_site/access/db_secret_key.txt") as f:
+        db_user = str(f.readline().strip())
+        db_pass = str(f.readline().strip())
+
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'django_imagr',
+            'USER': db_user,
+            'PASSWORD': db_pass,
+            'HOST': ''
+        },
+        # 'OPTIONS': {
+        #     'autocommit': True,
+        # }
+    }
+
