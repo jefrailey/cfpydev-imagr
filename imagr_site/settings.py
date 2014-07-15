@@ -81,6 +81,7 @@ class Dev(Common):
 
     MEDIA_URL = '/media/'
     MEDIA_ROOT = BASE_DIR + "/media/"
+    print "this should not print"
 
 
 class Test(Common):
@@ -97,6 +98,8 @@ class Test(Common):
 
     MEDIA_URL = '/media/'
     MEDIA_ROOT = os.path.abspath(os.path.dirname(__file__)) + "/test_data/"
+
+    print "hi we're testing"
 
 
 class Prod(Common):

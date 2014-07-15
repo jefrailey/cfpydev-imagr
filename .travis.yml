@@ -6,4 +6,5 @@ install: "pip install -r requirements.txt"
 # command to run tests
 before_script:
   - psql -c 'create database django_imagr;' -U postgres
+env: DJANGO_CONFIGURATION = 'Test'
 script: python manage.py test
