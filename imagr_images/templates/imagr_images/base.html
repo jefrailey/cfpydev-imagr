@@ -5,13 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     {% load staticfiles %}
 
-    <link rel="stylesheet" href="{% static 'imagr_images/kube.css' %}" />
-    <link rel="stylesheet" href="{% static 'imagr_images/style.css' %}" />
-        <nav class="navbar navbar-right">
-            <ul>
-                <li class="active"><a href="/{{user.id}}/">Home</a></li>
-            </ul>
-        </nav>
+    <link rel="stylesheet" href="{% static 'kube.css' %}" />
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+        {% if user %}
+            <nav class="navbar navbar-right">
+                <ul>
+                    <li class="active"><a href="{% url 'imagr_images:home' %}">Home</a></li>
+                </ul>
+            </nav>
+        {% endif %}
     <title>{% block title %} Imagr Images {% endblock %} </title>
 </head>
 

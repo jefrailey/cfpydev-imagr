@@ -68,12 +68,6 @@ class Common(Configuration):
 
     USE_TZ = True
 
-    STATIC_URL = '/imagr_images/static/'
-    STATIC_ROOT = BASE_DIR + "imagr_images/static/imagr_images"
-
-    MEDIA_URL = '/media/'
-    MEDIA_ROOT = BASE_DIR + "/media/"
-
 
 class Dev(Common):
     u"""
@@ -82,7 +76,12 @@ class Dev(Common):
     BASE_DIR = os.path.dirname(os.path.dirname(__file__))
     with open(BASE_DIR + '/imagr_site/access/secret_key.txt', 'rb') as f:
         SECRET_KEY = str(f.read().strip())
-    yes = "yes"
+
+    STATIC_URL = '/imagr_images/static/'
+    STATIC_ROOT = BASE_DIR + "/imagr_images/static/imagr_images"
+
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = BASE_DIR + "/media/"
 
 
 class Prod(Common):
@@ -93,12 +92,15 @@ class Prod(Common):
     with open(BASE_DIR+ '/imagr_site/access/secret_key.txt', 'rb') as f:
         SECRET_KEY = str(f.read().strip())
 
-    #SECRET_KEY = values.SecretValue()
-    STATIC_ROOT = os.path.join(BASE_DIR, "/imagr_images/static/")
+    STATIC_URL = '/static/'
+    STATIC_ROOT = "/data/www/static/"
+
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = "/data/www/media/"
 
     ALLOWED_HOSTS = [".ec2-54-191-119-156.us-west-2.compute.amazonaws.com"]
 
-    CSRF_COOKIE_SECURE = True
+    # CSRF_COOKIE_SECURE = True
     SESSION_COOKIE_SECURE = True
     CONN_MAX_AGE = None
     # TEMPLATE_LOADERS = (('django.template.loaders.cached.Loader', (
@@ -117,7 +119,7 @@ class Prod(Common):
 
     DEBUG = False
 
-    with open("/home/ubuntu/cfpydev-imagr/imagr_site/access/db_secret_key.txt") as f:
+    with open(BASE_DIR + "/imagr_site/access/db_secret_key.txt") as f:
         db_user = str(f.readline().strip())
         db_pass = str(f.readline().strip())
 
@@ -130,4 +132,5 @@ class Prod(Common):
             'HOST': ''
         },
     }
+
 

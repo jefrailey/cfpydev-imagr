@@ -12,13 +12,13 @@ def front_page(request):
     return render(request, 'imagr_images/index.html')
 
 
-def home_page(request, owner):
+def home_page(request):
     u"""shows logged-in users a list of their albums, with a representative
     image from each album
     """
     if request.user.is_authenticated():
         albums = Album.objects.filter(owner=request.user)
-        context = {'owner': owner, 'albums': albums}
+        context = {'albums': albums}
         return render(request, 'imagr_images/home.html', context)
     else:
         return render(request, 'imagr_images/index.html')

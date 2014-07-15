@@ -169,6 +169,13 @@ server {
     listen 80;
     server_name http://%s/;
     access_log  /var/log/nginx/test.log;
+    root /data/www;
+
+    location /static/ {
+    }
+
+    location /media/ {
+    }
 
     location / {
         proxy_pass http://127.0.0.1:8000;
@@ -182,9 +189,12 @@ server {
 
 
 def deploy_static():
-    sudo("export DJANGO_CONFIGURATION=Prod")
-    sudo("export DJANGO_SETTINGS_MODULE=imagr_site.settings")
-    sudo('python ./cfpydev-imagr/manage.py collectstatic')
+    # run("export DJANGO_CONFIGURATION='Prod'")
+    # run_command_on_selected_server("export CONFIGURATION='Prod'")
+    # run('echo $DJANGO_CONFIGURATION')
+    # run_command_on_selected_server('echo $CONFIGURATION')
+    # run_command_on_selected_server("export DJANGO_SETTINGS_MODULE='imagr_site.settings'")
+    sudo('export DJANGO_SETTINGS_MODULE="imagr_site.settings"; export DJANGO_CONFIGURATION="Prod"; python ./cfpydev-imagr/manage.py collectstatic --noinput')
 
 
 def install_dependencies():
@@ -204,6 +214,9 @@ def install_dependencies():
     #prompt to enter password
     sudo('-u postgres createdb django_imagr')
     sudo('CREATE ROLE ubuntu SUPERUSER;')
+    #make dir media
+    #make dir static
+    #move static images
 
 
 def deploy():
@@ -217,6 +230,6 @@ def deploy():
     install_nginx()
     generate_nginx_config()
     run_command_on_selected_server(rsync_project, remote_dir="~/", exclude=[".git"])
-    #run_command_on_selected_server(deploy_static)
+    run_command_on_selected_server(deploy_static)
     install_supervisor()
     move_nginx_files()
