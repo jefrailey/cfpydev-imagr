@@ -45,8 +45,7 @@ class ImagesTests(TestCase):
         self.generator = self._name_generator()
 
     def tearDown(self):
-        # reset MEDIA_ROOT
-        settings.MEDIA_ROOT = self._old_MEDIA_ROOT
+        pass
 
     def test_save(self):
         u"""Photo test"""

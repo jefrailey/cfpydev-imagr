@@ -96,9 +96,7 @@ class Test(Common):
     STATIC_ROOT = BASE_DIR + "/imagr_images/static/imagr_images"
 
     MEDIA_URL = '/media/'
-    MEDIA_ROOT = os.path.abspath(os.path.dirname(__file__)) + "test_data/media/"
-
-    print "hello!!!!!"
+    MEDIA_ROOT = os.path.abspath(os.path.dirname(__file__)) + "/test_data/"
 
 
 class Prod(Common):
