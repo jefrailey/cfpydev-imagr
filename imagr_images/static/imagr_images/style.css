@@ -6,10 +6,16 @@ body {
 }
 
 .picture {
-    border: 10px solid #8B8878;
+    border: 12px solid #8B8878;
     border-radius: 5px;
+    box-shadow:
+        4px 5px 6px 4px;
 }
 
 a {
     color: black;
+}
+
+h1, h2, h3, h4, h5 {
+
 }

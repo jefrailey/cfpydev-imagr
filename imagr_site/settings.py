@@ -17,13 +17,6 @@ class Common(Configuration):
     # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
     BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
-    # Quick-start development settings - unsuitable for production
-    # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
-    # SECURITY WARNING: keep the secret key used in production secret!
-
-    # SECURITY WARNING: don't run with debug turned on in production!
-    DEBUG = True
-
     TEMPLATE_DEBUG = True
 
     ALLOWED_HOSTS = ["ec2-54-187-91-202.us-west-2.compute.amazonaws.com"]
@@ -112,6 +105,9 @@ class Prod(Common):
     #     'django.template.loaders.filesystem.Loader',
     # )),
     # )
+
+    DEBUG = False
+
     # with open("/home/ubuntu/cfpydev-imagr/imagr_site/access/db_secret_key.txt") as f:
     #     db_user = str(f.readline().strip())
     #     db_pass = str(f.readline().strip())

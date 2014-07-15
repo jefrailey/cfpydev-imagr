@@ -11,7 +11,7 @@
     {% load thumbnail %}
     {% for photo in photos %}
         <div class="units-row units-padding">
-        <div class="unit-30 units-padding"><a href="/imagr_images/photo/{{photo.pk}}">
+        <div class="unit-30 units-padding"><a href="/photo/{{photo.pk}}">
             <img class="picture" src="{% thumbnail photo.image 50x50 crop %}" alt=""/></a></div>
             </div>
     {% endfor %}
