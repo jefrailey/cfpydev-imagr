@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% load staticfiles %}
+
+    <link rel="stylesheet" href="{% static 'kube.css' %}" />
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+        {% if user %}
+            <nav class="navbar navbar-right">
+                <ul>
+                    <li class="active"><a href="{% url 'imagr_images:home' %}">Home</a></li>
+                </ul>
+            </nav>
+        {% endif %}
+    <title>{% block title %} Imagr Images {% endblock %} </title>
+</head>
+
+<body> {% block body %}{% endblock %} </body>
+
+<footer>Photo sharing for all! A Code Fellows project by Corinne Hutchinson & Joshua Frailey.</footer>
+
+</html>

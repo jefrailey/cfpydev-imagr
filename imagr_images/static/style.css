@@ -1,24 +1,45 @@
-html {
-    height: 100%;
+
+
+body {
+    font-family: Georgia, serif;
+    padding-top: 100px;
+    padding-left: 100px;
+    padding-right: 100px;
+    background-color: #FEFFF1;
+}
+
+.picture {
+    border: 12px solid #8B8878;
+    border-radius: 5px;
+    box-shadow:
+        4px 5px 6px 4px;
+    padding: 30px;
+}
+
+.pic_title{
+    padding: 80px;
+}
+
+a {
+    color: black;
+}
+
+.description {
+    padding: 20px;
+
+}
+
+h2, h3, h4, h5 {
+    font-family: Georgia, serif;
 }
 
 h1 {
-    text-align: center;
+    font-family: Georgia, serif;
+    font-size: 400%;
 }
 
-h3 {
-    text-align: center;
-}
-
-body {
-    background-color: #FFFAF0;
-    color:#FFFAF0;
-    padding:0;
-    margin:0;
-    font-family: Helvetica, Sans-Serif;
-    height: 100%;
-}
-
-#content {
-
+footer {
+    position: relative;
+    bottom: 0;
+    padding: 50px;
 }

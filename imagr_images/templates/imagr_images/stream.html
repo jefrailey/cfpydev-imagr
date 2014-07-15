@@ -1,8 +1,18 @@
+{% extends "imagr_images/base.html" %}
 
-<h3>See what your friends have been doing!</h3>
+{% block title %} Photo Stream {% endblock %}
+
+{% block body %}
+
+<h1>Check out your friends' pictures!</h1>
 {% if photos %}
     {% load thumbnail %}
     {% for photo in photos %}
-        <a href="/imagr_images/photo/{{photo.pk}}"><img src="{% thumbnail photo.image 50x50 crop %}" alt=""/></a>
+        <div class="units-row units-padding">
+        <div class="unit-30 units-padding"><a href="/photo/{{photo.pk}}">
+            <img class="picture" src="{% thumbnail photo.image 50x50 crop %}" alt=""/></a></div>
+        </div>
     {% endfor %}
 {% endif %}
+
+{% endblock %}

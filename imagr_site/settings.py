@@ -14,26 +14,13 @@ class Common(Configuration):
     """
     DEBUG = True
 
-    # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
     BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-
-
-    # Quick-start development settings - unsuitable for production
-    # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
-
-    # SECURITY WARNING: keep the secret key used in production secret!
-    SECRET_KEY = '_0)ionh8p(-xw=uh-3_8un)^xo+=&obsad&lhohn-d93j(p!21'
-    # SECURITY WARNING: don't run with debug turned on in production!
-    DEBUG = True
 
     TEMPLATE_DEBUG = True
 
     ALLOWED_HOSTS = []
 
     AUTH_USER_MODEL = 'imagr_users.ImagrUser'
-
-
-    # Application definition
 
     INSTALLED_APPS = (
         'django.contrib.admin',
@@ -60,10 +47,6 @@ class Common(Configuration):
 
     WSGI_APPLICATION = 'imagr_site.wsgi.application'
 
-
-    # Database
-    # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
-
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -72,13 +55,8 @@ class Common(Configuration):
             'PASSWORD': '',
             'HOST': ''
         },
-        # 'OPTIONS': {
-        #     'autocommit': True,
-        # }
     }
 
-    # Internationalization
-    # https://docs.djangoproject.com/en/1.6/topics/i18n/
 
     LANGUAGE_CODE = 'en-us'
 
@@ -91,23 +69,68 @@ class Common(Configuration):
     USE_TZ = True
 
 
-    # Static files (CSS, JavaScript, Images)
-    # https://docs.djangoproject.com/en/1.6/howto/static-files/
+class Dev(Common):
+    u"""
+    The in-development settings and the default configuration.
+    """
+    BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+    with open(BASE_DIR + '/imagr_site/access/secret_key.txt', 'rb') as f:
+        SECRET_KEY = str(f.read().strip())
 
-    STATIC_URL = '/static/'
+    STATIC_URL = '/imagr_images/static/'
+    STATIC_ROOT = BASE_DIR + "/imagr_images/static/imagr_images"
 
     MEDIA_URL = '/media/'
     MEDIA_ROOT = BASE_DIR + "/media/"
 
 
-class Dev(Common):
-    u"""
-    The in-development settings and the default configuration.
-    """
-    pass
-
 class Prod(Common):
     u"""
     The in-production settings.
     """
-    SECRET_KEY = values.SecretValue()
+    BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+    with open(BASE_DIR+ '/imagr_site/access/secret_key.txt', 'rb') as f:
+        SECRET_KEY = str(f.read().strip())
+
+    STATIC_URL = '/static/'
+    STATIC_ROOT = "/data/www/static/"
+
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = "/data/www/media/"
+
+    ALLOWED_HOSTS = [".ec2-54-191-119-156.us-west-2.compute.amazonaws.com"]
+
+    # CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = True
+    CONN_MAX_AGE = None
+    # TEMPLATE_LOADERS = (('django.template.loaders.cached.Loader', (
+    #     'django.template.loaders.filesystem.Loader',
+    # )),
+    # )
+
+    MIDDLEWARE_CLASSES = (
+        'django.contrib.sessions.middleware.SessionMiddleware',
+        'django.middleware.common.CommonMiddleware',
+        'django.middleware.csrf.CsrfViewMiddleware',
+        'django.contrib.auth.middleware.AuthenticationMiddleware',
+        'django.contrib.messages.middleware.MessageMiddleware',
+        'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    )
+
+    DEBUG = False
+
+    with open(BASE_DIR + "/imagr_site/access/db_secret_key.txt") as f:
+        db_user = str(f.readline().strip())
+        db_pass = str(f.readline().strip())
+
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'django_imagr',
+            'USER': db_user,
+            'PASSWORD': db_pass,
+            'HOST': ''
+        },
+    }
+
+
