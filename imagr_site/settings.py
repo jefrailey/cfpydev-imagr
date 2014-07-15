@@ -85,49 +85,49 @@ class Dev(Common):
     yes = "yes"
 
 
-# class Prod(Common):
-#     u"""
-#     The in-production settings.
-#     """
-#     BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-#     with open(BASE_DIR+ '/imagr_site/access/secret_key.txt', 'rb') as f:
-#         SECRET_KEY = str(f.read().strip())
+class Prod(Common):
+    u"""
+    The in-production settings.
+    """
+    BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+    with open(BASE_DIR+ '/imagr_site/access/secret_key.txt', 'rb') as f:
+        SECRET_KEY = str(f.read().strip())
 
-#     #SECRET_KEY = values.SecretValue()
-#     STATIC_ROOT = os.path.join(BASE_DIR, "/imagr_images/static/")
+    #SECRET_KEY = values.SecretValue()
+    STATIC_ROOT = os.path.join(BASE_DIR, "/imagr_images/static/")
 
-#     ALLOWED_HOSTS = [".ec2-54-191-119-156.us-west-2.compute.amazonaws.com"]
+    ALLOWED_HOSTS = [".ec2-54-191-119-156.us-west-2.compute.amazonaws.com"]
 
-#     CSRF_COOKIE_SECURE = True
-#     SESSION_COOKIE_SECURE = True
-#     CONN_MAX_AGE = None
-#     # TEMPLATE_LOADERS = (('django.template.loaders.cached.Loader', (
-#     #     'django.template.loaders.filesystem.Loader',
-#     # )),
-#     # )
+    CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = True
+    CONN_MAX_AGE = None
+    # TEMPLATE_LOADERS = (('django.template.loaders.cached.Loader', (
+    #     'django.template.loaders.filesystem.Loader',
+    # )),
+    # )
 
-#     MIDDLEWARE_CLASSES = (
-#         'django.contrib.sessions.middleware.SessionMiddleware',
-#         'django.middleware.common.CommonMiddleware',
-#         'django.middleware.csrf.CsrfViewMiddleware',
-#         'django.contrib.auth.middleware.AuthenticationMiddleware',
-#         'django.contrib.messages.middleware.MessageMiddleware',
-#         'django.middleware.clickjacking.XFrameOptionsMiddleware',
-#     )
+    MIDDLEWARE_CLASSES = (
+        'django.contrib.sessions.middleware.SessionMiddleware',
+        'django.middleware.common.CommonMiddleware',
+        'django.middleware.csrf.CsrfViewMiddleware',
+        'django.contrib.auth.middleware.AuthenticationMiddleware',
+        'django.contrib.messages.middleware.MessageMiddleware',
+        'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    )
 
-#     DEBUG = False
+    DEBUG = False
 
-#     with open("/home/ubuntu/cfpydev-imagr/imagr_site/access/db_secret_key.txt") as f:
-#         db_user = str(f.readline().strip())
-#         db_pass = str(f.readline().strip())
+    with open("/home/ubuntu/cfpydev-imagr/imagr_site/access/db_secret_key.txt") as f:
+        db_user = str(f.readline().strip())
+        db_pass = str(f.readline().strip())
 
-#     DATABASES = {
-#         'default': {
-#             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#             'NAME': 'django_imagr',
-#             'USER': db_user,
-#             'PASSWORD': db_pass,
-#             'HOST': ''
-#         },
-#     }
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'django_imagr',
+            'USER': db_user,
+            'PASSWORD': db_pass,
+            'HOST': ''
+        },
+    }
 

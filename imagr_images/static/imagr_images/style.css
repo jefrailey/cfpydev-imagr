@@ -1,17 +1,12 @@
 
-title {
-    font-family: Baskerville, "Palatino Linotype", "Book Antiqua", Palatino, serif;
-}
 
 body {
-    font-family: Baskerville, serif;
+    font-family: Georgia, serif;
     padding-top: 100px;
     padding-left: 100px;
     padding-right: 100px;
     background-color: #FEFFF1;
-
 }
-
 
 .picture {
     border: 12px solid #8B8878;
@@ -34,7 +29,12 @@ a {
 
 }
 
+h2, h3, h4, h5 {
+    font-family: Georgia, serif;
+}
+
 h1 {
+    font-family: Georgia, serif;
     font-size: 400%;
 }
 
