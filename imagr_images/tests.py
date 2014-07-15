@@ -15,12 +15,6 @@ class ImagesTests(TestCase):
         Create a temp folder for images to be stored in, so test images
         don't clog up regular media folder."""
 
-        TEST_ROOT = os.path.abspath(os.path.dirname(__file__))
-
-        self._old_MEDIA_ROOT = settings.MEDIA_ROOT
-        # override MEDIA_ROOT for this test
-        settings.MEDIA_ROOT = os.path.join(TEST_ROOT, 'test_data/media/')
-
         self.DJANGO_CONFIGURATION = 'Test'
 
         user = ImagrUser(username="tester")
