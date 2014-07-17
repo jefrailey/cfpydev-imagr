@@ -81,22 +81,24 @@ class Dev(Common):
 
     MEDIA_URL = '/media/'
     MEDIA_ROOT = BASE_DIR + "/media/"
+    print "this should not print"
 
 
 class Test(Common):
     u"""
     The test settings and the default configuration.
     """
-    BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-    # with open(BASE_DIR + '/imagr_site/access/secret_key.txt', 'rb') as f:
-    #     SECRET_KEY = str(f.read().strip())
     SECRET_KEY = "testing_key"
+
+    BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
     STATIC_URL = '/imagr_images/static/'
     STATIC_ROOT = BASE_DIR + "/imagr_images/static/imagr_images"
 
     MEDIA_URL = '/media/'
-    MEDIA_ROOT = BASE_DIR + "/media/"
+    MEDIA_ROOT = os.path.abspath(os.path.dirname(__file__)) + "/test_data/"
+
+    print "hi we're testing"
 
 
 class Prod(Common):
@@ -114,9 +116,10 @@ class Prod(Common):
     MEDIA_ROOT = "/data/www/media/"
 
     ALLOWED_HOSTS = [".ec2-54-191-119-156.us-west-2.compute.amazonaws.com"]
+    #ALLOWED_HOSTS = [".ec2-54-187-11-231.us-west-2.compute.amazonaws.com"]
 
     # CSRF_COOKIE_SECURE = True
-    SESSION_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = False
     CONN_MAX_AGE = None
     # TEMPLATE_LOADERS = (('django.template.loaders.cached.Loader', (
     #     'django.template.loaders.filesystem.Loader',

@@ -15,13 +15,6 @@ class ImagesTests(TestCase):
         Create a temp folder for images to be stored in, so test images
         don't clog up regular media folder."""
 
-        TEST_ROOT = os.path.abspath(os.path.dirname(__file__))
-
-        # override MEDIA_ROOT for this test
-        settings.MEDIA_ROOT = os.path.join(TEST_ROOT, 'test_data/media/')
-
-        self._old_MEDIA_ROOT = settings.MEDIA_ROOT
-
         self.DJANGO_CONFIGURATION = 'Test'
 
         user = ImagrUser(username="tester")
@@ -52,8 +45,7 @@ class ImagesTests(TestCase):
         self.generator = self._name_generator()
 
     def tearDown(self):
-        # reset MEDIA_ROOT
-        settings.MEDIA_ROOT = self._old_MEDIA_ROOT
+        pass
 
     def test_save(self):
         u"""Photo test"""
