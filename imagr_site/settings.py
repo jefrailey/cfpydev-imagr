@@ -68,30 +68,29 @@ class Common(Configuration):
     USE_TZ = True
 
 
-# class Dev(Common):
-#     u"""
-#     The in-development settings and the default configuration.
-#     """
-#     BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-#     with open(BASE_DIR + '/imagr_site/access/secret_key.txt', 'rb') as f:
-#         SECRET_KEY = str(f.read().strip())
+class Dev(Common):
+    u"""
+    The in-development settings and the default configuration.
+    """
+    BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+    with open(BASE_DIR + '/imagr_site/access/secret_key.txt', 'rb') as f:
+        SECRET_KEY = str(f.read().strip())
 
-#     STATIC_URL = '/imagr_images/static/'
-#     STATIC_ROOT = BASE_DIR + "/imagr_images/static/imagr_images"
+    STATIC_URL = '/imagr_images/static/'
+    STATIC_ROOT = BASE_DIR + "/imagr_images/static/imagr_images"
 
-#     MEDIA_URL = '/media/'
-#     MEDIA_ROOT = BASE_DIR + "/media/"
-#     print "this should not print"
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = BASE_DIR + "/media/"
+    print "this should not print"
 
 
 class Test(Common):
     u"""
     The test settings and the default configuration.
     """
-    BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-    # with open(BASE_DIR + '/imagr_site/access/secret_key.txt', 'rb') as f:
-    #     SECRET_KEY = str(f.read().strip())
     SECRET_KEY = "testing_key"
+
+    BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
     STATIC_URL = '/imagr_images/static/'
     STATIC_ROOT = BASE_DIR + "/imagr_images/static/imagr_images"
@@ -102,53 +101,54 @@ class Test(Common):
     print "hi we're testing"
 
 
-# class Prod(Common):
-#     u"""
-#     The in-production settings.
-#     """
-#     BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-#     with open(BASE_DIR+ '/imagr_site/access/secret_key.txt', 'rb') as f:
-#         SECRET_KEY = str(f.read().strip())
+class Prod(Common):
+    u"""
+    The in-production settings.
+    """
+    BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+    with open(BASE_DIR+ '/imagr_site/access/secret_key.txt', 'rb') as f:
+        SECRET_KEY = str(f.read().strip())
 
-#     STATIC_URL = '/static/'
-#     STATIC_ROOT = "/data/www/static/"
+    STATIC_URL = '/static/'
+    STATIC_ROOT = "/data/www/static/"
 
-#     MEDIA_URL = '/media/'
-#     MEDIA_ROOT = "/data/www/media/"
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = "/data/www/media/"
 
-#     ALLOWED_HOSTS = [".ec2-54-191-119-156.us-west-2.compute.amazonaws.com"]
+    ALLOWED_HOSTS = [".ec2-54-191-119-156.us-west-2.compute.amazonaws.com"]
+    #ALLOWED_HOSTS = [".ec2-54-187-11-231.us-west-2.compute.amazonaws.com"]
 
-#     # CSRF_COOKIE_SECURE = True
-#     SESSION_COOKIE_SECURE = True
-#     CONN_MAX_AGE = None
-#     # TEMPLATE_LOADERS = (('django.template.loaders.cached.Loader', (
-#     #     'django.template.loaders.filesystem.Loader',
-#     # )),
-#     # )
+    # CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = False
+    CONN_MAX_AGE = None
+    # TEMPLATE_LOADERS = (('django.template.loaders.cached.Loader', (
+    #     'django.template.loaders.filesystem.Loader',
+    # )),
+    # )
 
-#     MIDDLEWARE_CLASSES = (
-#         'django.contrib.sessions.middleware.SessionMiddleware',
-#         'django.middleware.common.CommonMiddleware',
-#         'django.middleware.csrf.CsrfViewMiddleware',
-#         'django.contrib.auth.middleware.AuthenticationMiddleware',
-#         'django.contrib.messages.middleware.MessageMiddleware',
-#         'django.middleware.clickjacking.XFrameOptionsMiddleware',
-#     )
+    MIDDLEWARE_CLASSES = (
+        'django.contrib.sessions.middleware.SessionMiddleware',
+        'django.middleware.common.CommonMiddleware',
+        'django.middleware.csrf.CsrfViewMiddleware',
+        'django.contrib.auth.middleware.AuthenticationMiddleware',
+        'django.contrib.messages.middleware.MessageMiddleware',
+        'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    )
 
-#     DEBUG = False
+    DEBUG = False
 
-#     with open(BASE_DIR + "/imagr_site/access/db_secret_key.txt") as f:
-#         db_user = str(f.readline().strip())
-#         db_pass = str(f.readline().strip())
+    with open(BASE_DIR + "/imagr_site/access/db_secret_key.txt") as f:
+        db_user = str(f.readline().strip())
+        db_pass = str(f.readline().strip())
 
-#     DATABASES = {
-#         'default': {
-#             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#             'NAME': 'django_imagr',
-#             'USER': db_user,
-#             'PASSWORD': db_pass,
-#             'HOST': ''
-#         },
-#     }
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'django_imagr',
+            'USER': db_user,
+            'PASSWORD': db_pass,
+            'HOST': ''
+        },
+    }
 
 

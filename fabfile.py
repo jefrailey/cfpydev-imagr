@@ -3,10 +3,12 @@ from fabric.api import env
 from fabric.api import prompt
 from fabric.api import execute
 from fabric.api import sudo
+from fabric.api import settings
 from fabric.contrib.project import rsync_project
 import boto.ec2
 import time
 import boto
+import os
 
 env.hosts = ['localhost', ]
 env.aws_region = 'us-west-2'
@@ -188,35 +190,45 @@ server {
         outfile.write(config_file)
 
 
-def deploy_static():
-    # run("export DJANGO_CONFIGURATION='Prod'")
-    # run_command_on_selected_server("export CONFIGURATION='Prod'")
-    # run('echo $DJANGO_CONFIGURATION')
-    # run_command_on_selected_server('echo $CONFIGURATION')
-    # run_command_on_selected_server("export DJANGO_SETTINGS_MODULE='imagr_site.settings'")
-    sudo('export DJANGO_SETTINGS_MODULE="imagr_site.settings"; export DJANGO_CONFIGURATION="Prod"; python ./cfpydev-imagr/manage.py collectstatic --noinput')
+def _deploy_static():
+    sudo("""cd /; mkdir /data; cd /data; mkdir media; mkdir static; cd;
+        export DJANGO_SETTINGS_MODULE="imagr_site.settings";
+        export DJANGO_CONFIGURATION="Prod";
+        python ./cfpydev-imagr/manage.py collectstatic --noinput""")
 
 
-def install_dependencies():
-    sudo('apt-get update')
-    sudo('apt-get install python-pip')
-    sudo('pip install django')
-    sudo('pip install django-configuration')
-    sudo('sudo apt-get install libjpeg-dev')
-    sudo('sudo apt-get install python-dev')
-    sudo('pip install Pillow')
-    sudo('pip install easy-thumbnails')
-    sudo('apt-get install libpq-dev')
-    sudo('pip install psycopg2')
+def _set_up_db():
+    base = os.path.dirname(os.path.dirname(__file__))
+    with open(base + '/imagr_site/access/secret_key.txt', 'rb') as f:
+        SECRET_KEY = str(f.read().strip())
     sudo('apt-get install postgresql')
-    sudo('sudo -u postgres psql postgres')
+    sudo('psql < ~/cfpydev-imagr/setup.sql', user='postgres')
+
     sudo('\password postgres')
-    #prompt to enter password
     sudo('-u postgres createdb django_imagr')
-    sudo('CREATE ROLE ubuntu SUPERUSER;')
-    #make dir media
-    #make dir static
-    #move static images
+    sudo('apt-get -y install postgresql postgresql-contrib')
+    sudo('sudo -u postgres psql; CREATE EXTENSION adminpack;')
+    # helpful page: https://help.ubuntu.com/community/PostgreSQL
+    sudo('python cfpydev-imagr/manage.py syncdb --noinput')
+    sudo('mv /etc/postgresql/9.1/main/pg_hba.conf /etc/postgresql/9.1/main/pg_hba.back')
+    sudo('mv cfpydev-imagr/pg_hba.conf /etc/postgresql/9.1/main/pg_hba.conf')
+    sudo('service postgresql restart')
+
+#######
+    sudo('psql < ~/cfpydev-imagr/setup.sql', user='postgres')
+    sudo('/usr/bin/python cfpydev-imagr/manage.py syncdb --noinput')
+    sudo('/usr/bin/python cfpydev-imagr/manage.py loaddata cfpydev-imagr/user.json')
+
+
+def _install_dependencies():
+    sudo('apt-get update')
+    sudo('apt-get -y install python-pip')
+    sudo('apt-get install libjpeg-dev')
+    sudo('apt-get install python-dev')
+    sudo('apt-get install libpq-dev')
+    sudo('apt-get -y install python-setuptools')
+    with settings(warn_only=True):
+        sudo('pip install -r ~/cfpydev-imagr/requirements.txt')
 
 
 def deploy():
@@ -230,6 +242,8 @@ def deploy():
     install_nginx()
     generate_nginx_config()
     run_command_on_selected_server(rsync_project, remote_dir="~/", exclude=[".git"])
-    run_command_on_selected_server(deploy_static)
+    run_command_on_selected_server(_install_dependencies)
+    #run_command_on_selected_server(_set_up_db)
+    run_command_on_selected_server(_deploy_static)
     install_supervisor()
     move_nginx_files()
